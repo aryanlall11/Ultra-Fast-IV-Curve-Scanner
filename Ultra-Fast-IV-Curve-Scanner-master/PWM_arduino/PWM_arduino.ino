@@ -30,19 +30,20 @@ void loop()
       delayMicroseconds(50);  //Adjustable Pulse Width
 
       /*******************Measurement-I**********************/
+      /*Default ports are A0(Voltage with amplification) and A2(Current without amplification)*/
 
-      init(0x61);                 //Initialise input port 1 (Refer to manual for arguments)
+      init(0x60);                 //Initialise input port 0 (Refer to manual for arguments)
       while(ADCSRA & (1<<ADSC));
       a = ADCL>>6 ;
       b = ADCH <<2;
       y = b|a;
-
-      PORTC=0;
       if(numSamples0<256)
       {
         red0[numSamples0]=y;      //Store measured value
         numSamples0++;
       }
+    
+      PORTC=0;
       delayMicroseconds(2000);    //Delay between two pulses
         
       PORTC=(255-i);
@@ -55,13 +56,13 @@ void loop()
       a = ADCL>>6 ;
       b = ADCH <<2;
       y = b|a;
-
-      PORTC=0;
       if(numSamples1<256)
       {
         red1[numSamples1]=y;       //Store measured value
         numSamples1++;
       }
+    
+      PORTC=0;
       delayMicroseconds(2000);     //Delay between two pulses
      
     }
